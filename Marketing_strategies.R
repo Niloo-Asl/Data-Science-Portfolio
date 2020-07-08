@@ -63,10 +63,10 @@ n_item=length(unique(data$StockCode))
 names(data)[2]="item"
 
 # Creating transaction format datafile
-write.csv(data, "donneesTransac.csv", row.names = F)
+write.csv(data, "dataTransac.csv", row.names = F)
 
 trans <- read.transactions(
-  file = "donneesTransac.csv",
+  file = "dataTransac.csv",
   format = "single",
   sep = ",", header = T,
   cols=c("InvoiceNo","item"),
