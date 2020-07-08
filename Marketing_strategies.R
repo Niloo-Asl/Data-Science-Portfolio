@@ -73,7 +73,7 @@ trans <- read.transactions(
   rm.duplicates = T
 )
 
-rm(data)
+rm(data) 
 
 inspect(trans[1:5])
 
