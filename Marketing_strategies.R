@@ -53,7 +53,7 @@ B$CustomerID[1]
 
 rm(B,C)
 
-# Removing the columns which are not necessary for this analysis
+# Removing the columns which are not necessary for this analysis #
 data=data[,c(1,2)]
 
 # Number of items in the shop
