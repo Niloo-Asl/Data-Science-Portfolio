@@ -70,6 +70,10 @@ table(data_bank_deposit$deposit)/nrow(data_bank_deposit)
 
 library(adabag)
 # pour bagging, boosting et foret aleatoire les colonnes de character doivent etre des facteurs
+cols <- c("deposit", "job")
+data_bank_deposit[cols] <- lapply(data_bank_deposit[cols], factor)
+
+
 data_bank_deposit$deposit=factor(data_bank_deposit$deposit)
 data_bank_deposit$job=factor(data_bank_deposit$job)
 data_bank_deposit$marital=factor(data_bank_deposit$marital)

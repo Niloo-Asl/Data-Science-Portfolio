@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(readr)
 library(rpart)
 library(rattle)
+library(adabag)
 ```
 
 #### Importing Data
@@ -111,3 +112,19 @@ So, the majority value of deposit in this leaf is « yes » which make (30152/32
 
 As a result, with a probability of 93.6% of "yes" the judgment of this leaf is « yes » and 6.4% (2072/32226) of the observations in this leaf are mis-classified.
 
+### Two explanatory variables having the greatest importance in the construction of the tree:
+```{r}
+rpart_deposit$variable.importance[order(rpart_deposit$variable.importance, decreasing = TRUE)]
+```
+
+"duration" with importance value of 1180 and "pourcome" with importance value of 790
+
+### Natural classification error rate in data_deposit data table:
+```{r}
+table(data_deposit$deposit)/nrow(data_deposit)
+```
+The classification error rate is __12.6%__
+
+### Designing Boosting model with 50 trees and a maximum depth of 4:
+### Designing Bagging model with 50 trees and a maximum depth of 4:
+### Designing Rnadon Forest model with 50 trees and a maximum depth of 4 and a random subset of 5 variables:
