@@ -87,3 +87,9 @@ par(mar=c(0,2,2,0))
 plot(rpart_deposit)
 text(rpart_deposit)
 ```
+
+
+### The classification tree fancy graph
+```{r}
+fancyRpartPlot(rpart_deposit, caption = NULL)
+```
