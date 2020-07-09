@@ -32,19 +32,9 @@ colnames(df)= gsub('"','',colnames(df))
 ```
 
 Removing extra characters in each column values:
-
 ```{r}
-df$age=gsub('"','',df$age)
-df$job=gsub('"','',df$job)
-df$marital=gsub('"','', df$marital)
-df$education=gsub('"','',df$education)
-df$default=gsub('"','', df$default)
-df$housing=gsub('"','', df$housing)
-df$loan=gsub('"','', df$loan)
-df$contact=gsub('"','', df$contact)
-df$month=gsub('"','', df$month)
-df$poutcome=gsub('"','', df$poutcome)
-df$y=gsub('"','', df$y)
+cols <- c("age", "job", "marital","default","education","housing","loan","contact","month","poutcome","y")
+df[col]=lapply(df[col], function(x) gsub("'","",x))
 ```
 
 Duplicate verification
