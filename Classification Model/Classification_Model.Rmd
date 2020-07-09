@@ -88,8 +88,26 @@ plot(rpart_deposit)
 text(rpart_deposit)
 ```
 
-
 ### The classification tree fancy graph
 ```{r}
 fancyRpartPlot(rpart_deposit, caption = NULL)
 ```
+
+### Interpretation of the first terminal leaf :
+```{r}
+rpart_deposit
+```
+
+___poutcome=failure, other, unknown 32226 2072 no (0.93570409 0.06429591)___
+
+ The parent leaf of this terminal leaf is a 2-branch leaf :
+ 
+ -	poutcome = failure, other, unknown (the terminal leaf that I study here)
+ -	poutcome = success
+
+This terminal leaf has 32226 observations of which 2072 have a deposit value of « yes » and 30152 (32226-2072) observations have a deposit value of « no ». This means that 2072 values of deposit are mis-classified.
+
+So, the majority value of deposit in this leaf is « yes » which make (30152/32226) 93.57% of observations of this leaf.
+
+As a result, with a probability of 93.6% of "yes" the judgment of this leaf is « yes » and 6.4% (2072/32226) of the observations in this leaf are mis-classified.
+

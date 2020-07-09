@@ -1,5 +1,7 @@
 ############################################### Importer le fichier de data ############################################
 library(readr)
+library(rpart)
+library(rattle)
 df <- read_delim("data.csv", ";", escape_double = FALSE, trim_ws = TRUE)
 
 ############################################### Nettoyage de donnees ############################################
