@@ -16,6 +16,34 @@ library(readr)
 #### Importing Data
 
 ```{r}
-df <- read_delim("data_examen_final.csv", ";", escape_double = FALSE, trim_ws = TRUE)
+df <- read_delim("data.csv", ";", escape_double = FALSE, trim_ws = TRUE)
 ```
 
+#### Cleaning the data
+
+Removing extra characters in column name by changing the column names:
+
+```{r}
+colnames(df)= gsub('"','',colnames(df))
+```
+
+Removing extra characters in each column values:
+
+```{r}
+df$age=gsub('"','',df$age)
+df$job=gsub('"','',df$job)
+df$marital=gsub('"','', df$marital)
+df$education=gsub('"','',df$education)
+df$default=gsub('"','', df$default)
+df$housing=gsub('"','', df$housing)
+df$loan=gsub('"','', df$loan)
+df$contact=gsub('"','', df$contact)
+df$month=gsub('"','', df$month)
+df$poutcome=gsub('"','', df$poutcome)
+df$y=gsub('"','', df$y)
+```
+
+Duplicate verification
+```{r}
+ifelse(nrow(df[(duplicated(df)) , ])==0,"No duplicate", "There are duplicated in the table")
+```
