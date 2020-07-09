@@ -1,0 +1,21 @@
+---
+title: "Classification model"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Required libraries
+
+```{r}
+library(readr)
+```
+
+#### Importing Data
+
+```{r}
+df <- read_delim("data_examen_final.csv", ";", escape_double = FALSE, trim_ws = TRUE)
+```
+
