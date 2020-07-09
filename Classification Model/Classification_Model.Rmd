@@ -14,6 +14,7 @@ library(readr)
 library(rpart)
 library(rattle)
 library(adabag)
+library(randomForest)
 ```
 
 #### Importing Data
@@ -125,6 +126,51 @@ table(data_deposit$deposit)/nrow(data_deposit)
 ```
 The classification error rate is __12.6%__
 
-### Designing Boosting model with 50 trees and a maximum depth of 4:
+## Ensemble Methods
+For Ensemble Methods, the variables of type character must be converted into factors
+```{r}
+cols <- c("deposit", "job", "marital","education","housing","loan","contact","month","poutcome","default")
+data_deposit[cols] <- lapply(data_deposit[cols], factor)
+```
+And the table should be dataframe
+```{r}
+data_deposit=data.frame(data_deposit)
+```
+
 ### Designing Bagging model with 50 trees and a maximum depth of 4:
+```{r}
+bagging_deposit=bagging(deposit~.,data_deposit,mfinal=50, control=rpart.control(maxdepth=4))
+```
+Bagging Misclassification rate (MR)
+```{r}
+SUMM=sum(diag(table(bagging_deposit$class, data_deposit$deposit)))
+MR_bagging=1-(SUMM/nrow(data_deposit))
+```
+
+### Designing Boosting model with 50 trees and a maximum depth of 4:
+```{r}
+boosting_deposit=boosting(deposit~.,data_deposit,mfinal=50, control=rpart.control(maxdepth=4))
+```
+Boosting Misclassification Rate (MR)
+```{r}
+SUMM=sum(diag(table(boosting_deposit$class, data_deposit$deposit)))
+MR_boosting=1-(SUMM/nrow(data_deposit))
+```
+
 ### Designing Rnadon Forest model with 50 trees and a maximum depth of 4 and a random subset of 5 variables:
+```{r}
+RF_deposit=randomForest(deposit~.,data_deposit,ntree=50,mtry=5)
+```
+Random Forest Misclassification Rate (MR)
+```{r}
+SUMM=sum(diag(table(RF_deposit$predicted, data_deposit$deposit)))
+MR_RF=1-(SUMM/nrow(data_deposit))
+```
+
+Comparing the mis-classification rates of Bagging, boosting and Random Forest methods to decide which one performs better:
+```{r}
+paste("Bagging misclassification rate is : ", MR_bagging)
+paste("Boosting misclassification rate is : ", MR_boosting)
+paste("Random Forest misclassification rate is : ", MR_RF)
+```
+The misclassification rates of all 3 models are smaller than the classification error rate of the dataset (12.6%). This means that the 3 models are efficient. But the misclassification rate of the Boosting model is the smallest of all; which means that Boosting model is the most efficient models.

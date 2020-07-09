@@ -388,6 +388,25 @@ library(rattle)</code></pre>
 <pre><code>## Rattle: A free graphical interface for data science with R.
 ## Version 5.4.0 Copyright (c) 2006-2020 Togaware Pty Ltd.
 ## Type &#39;rattle()&#39; to shake, rattle, and roll your data.</code></pre>
+<pre class="r"><code>library(adabag)</code></pre>
+<pre><code>## Loading required package: caret</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## Loading required package: foreach</code></pre>
+<pre><code>## Loading required package: doParallel</code></pre>
+<pre><code>## Loading required package: iterators</code></pre>
+<pre><code>## Loading required package: parallel</code></pre>
+<pre class="r"><code>library(randomForest)</code></pre>
+<pre><code>## randomForest 4.6-14</code></pre>
+<pre><code>## Type rfNews() to see new features/changes/bug fixes.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;randomForest&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     margin</code></pre>
+<pre><code>## The following object is masked from &#39;package:rattle&#39;:
+## 
+##     importance</code></pre>
 <div id="importing-data" class="section level4">
 <h4>Importing Data</h4>
 <pre class="r"><code>df &lt;- read_delim(&quot;data.csv&quot;, &quot;;&quot;, escape_double = FALSE, trim_ws = TRUE)</code></pre>
@@ -543,6 +562,43 @@ text(rpart_deposit)</code></pre>
 ##        no       yes 
 ## 0.8737972 0.1262028</code></pre>
 <p>The classification error rate is <strong>12.6%</strong></p>
+</div>
+<div id="ensemble-methods" class="section level2">
+<h2>Ensemble Methods</h2>
+<p>For Ensemble Methods, the variables of type character must be converted into factors</p>
+<pre class="r"><code>cols &lt;- c(&quot;deposit&quot;, &quot;job&quot;, &quot;marital&quot;,&quot;education&quot;,&quot;housing&quot;,&quot;loan&quot;,&quot;contact&quot;,&quot;month&quot;,&quot;poutcome&quot;,&quot;default&quot;)
+data_deposit[cols] &lt;- lapply(data_deposit[cols], factor)</code></pre>
+<p>And the table should be dataframe</p>
+<pre class="r"><code>data_deposit=data.frame(data_deposit)</code></pre>
+<div id="designing-bagging-model-with-50-trees-and-a-maximum-depth-of-4" class="section level3">
+<h3>Designing Bagging model with 50 trees and a maximum depth of 4:</h3>
+<pre class="r"><code>bagging_deposit=bagging(deposit~.,data_deposit,mfinal=50, control=rpart.control(maxdepth=4))</code></pre>
+<p>Bagging Misclassification rate (MR)</p>
+<pre class="r"><code>SUMM=sum(diag(table(bagging_deposit$class, data_deposit$deposit)))
+MR_bagging=1-(SUMM/nrow(data_deposit))</code></pre>
+</div>
+<div id="designing-boosting-model-with-50-trees-and-a-maximum-depth-of-4" class="section level3">
+<h3>Designing Boosting model with 50 trees and a maximum depth of 4:</h3>
+<pre class="r"><code>boosting_deposit=boosting(deposit~.,data_deposit,mfinal=50, control=rpart.control(maxdepth=4))</code></pre>
+<p>Boosting Misclassification Rate (MR)</p>
+<pre class="r"><code>SUMM=sum(diag(table(boosting_deposit$class, data_deposit$deposit)))
+MR_boosting=1-(SUMM/nrow(data_deposit))</code></pre>
+</div>
+<div id="designing-rnadon-forest-model-with-50-trees-and-a-maximum-depth-of-4-and-a-random-subset-of-5-variables" class="section level3">
+<h3>Designing Rnadon Forest model with 50 trees and a maximum depth of 4 and a random subset of 5 variables:</h3>
+<pre class="r"><code>RF_deposit=randomForest(deposit~.,data_deposit,ntree=50,mtry=5)</code></pre>
+<p>Random Forest Misclassification Rate (MR)</p>
+<pre class="r"><code>SUMM=sum(diag(table(RF_deposit$predicted, data_deposit$deposit)))
+MR_RF=1-(SUMM/nrow(data_deposit))</code></pre>
+<p>Comparing the mis-classification rates of Bagging, boosting and Random Forest methods to decide which one performs better:</p>
+<pre class="r"><code>paste(&quot;Bagging misclassification rate is : &quot;, MR_bagging)</code></pre>
+<pre><code>## [1] &quot;Bagging misclassification rate is :  0.105217368379426&quot;</code></pre>
+<pre class="r"><code>paste(&quot;Boosting misclassification rate is : &quot;, MR_boosting)</code></pre>
+<pre><code>## [1] &quot;Boosting misclassification rate is :  0.0985209986554533&quot;</code></pre>
+<pre class="r"><code>paste(&quot;Random Forest misclassification rate is : &quot;, MR_RF)</code></pre>
+<pre><code>## [1] &quot;Random Forest misclassification rate is :  0.103240093854631&quot;</code></pre>
+<p>The misclassification rates of all 3 models are smaller than the classification error rate of the dataset. This means that the 3 models are efficient. But the misclassification rate of the Boosting model is the smallest of all; which means that Boosting model is the most efficient models.</p>
+</div>
 </div>
 
 

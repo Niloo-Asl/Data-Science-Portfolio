@@ -70,25 +70,11 @@ table(data_bank_deposit$deposit)/nrow(data_bank_deposit)
 
 library(adabag)
 # pour bagging, boosting et foret aleatoire les colonnes de character doivent etre des facteurs
-cols <- c("deposit", "job")
+cols <- c("deposit", "job", "marital","education","housing","loan","contact","month","poutcome","default")
 data_bank_deposit[cols] <- lapply(data_bank_deposit[cols], factor)
-
-
-data_bank_deposit$deposit=factor(data_bank_deposit$deposit)
-data_bank_deposit$job=factor(data_bank_deposit$job)
-data_bank_deposit$marital=factor(data_bank_deposit$marital)
-data_bank_deposit$education=factor(data_bank_deposit$education)
-data_bank_deposit$housing=factor(data_bank_deposit$housing)
-data_bank_deposit$loan=factor(data_bank_deposit$loan)
-data_bank_deposit$contact=factor(data_bank_deposit$contact)
-data_bank_deposit$month=factor(data_bank_deposit$month)
-data_bank_deposit$poutcome=factor(data_bank_deposit$poutcome)
-data_bank_deposit$default=factor(data_bank_deposit$default)
-summary(data_bank_deposit)
 
 # et type de table doit etre data.frame
 data_bank_deposit=data.frame(data_bank_deposit)
-class(data_bank_deposit)
 
 ############################################## Bagging ##########################################################
 bagging_bank_deposit=bagging(deposit~.,data_bank_deposit,mfinal=50, control=rpart.control(maxdepth=4))
