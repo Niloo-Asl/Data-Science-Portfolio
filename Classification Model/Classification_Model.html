@@ -424,6 +424,50 @@ df$y=gsub(&#39;&quot;&#39;,&#39;&#39;, df$y)</code></pre>
 <p>Duplicate verification</p>
 <pre class="r"><code>ifelse(nrow(df[(duplicated(df)) , ])==0,&quot;No duplicate&quot;, &quot;There are duplicated in the table&quot;)</code></pre>
 <pre><code>## [1] &quot;No duplicate&quot;</code></pre>
+<p>Average and Median of age of the Clients accounts’ balance :</p>
+<pre class="r"><code>summary(df)</code></pre>
+<pre><code>##      age                job              marital         
+##  Length:45211       Length:45211       Length:45211      
+##  Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character  
+##                                                          
+##                                                          
+##                                                          
+##   education           default             balance         housing         
+##  Length:45211       Length:45211       Min.   : -8019   Length:45211      
+##  Class :character   Class :character   1st Qu.:    72   Class :character  
+##  Mode  :character   Mode  :character   Median :   448   Mode  :character  
+##                                        Mean   :  1362                     
+##                                        3rd Qu.:  1428                     
+##                                        Max.   :102127                     
+##      loan             contact               day           month          
+##  Length:45211       Length:45211       Min.   : 1.00   Length:45211      
+##  Class :character   Class :character   1st Qu.: 8.00   Class :character  
+##  Mode  :character   Mode  :character   Median :16.00   Mode  :character  
+##                                        Mean   :15.81                     
+##                                        3rd Qu.:21.00                     
+##                                        Max.   :31.00                     
+##     duration         campaign          pdays          previous       
+##  Min.   :   0.0   Min.   : 1.000   Min.   : -1.0   Min.   :  0.0000  
+##  1st Qu.: 103.0   1st Qu.: 1.000   1st Qu.: -1.0   1st Qu.:  0.0000  
+##  Median : 180.0   Median : 2.000   Median : -1.0   Median :  0.0000  
+##  Mean   : 258.2   Mean   : 2.764   Mean   : 40.2   Mean   :  0.5803  
+##  3rd Qu.: 319.0   3rd Qu.: 3.000   3rd Qu.: -1.0   3rd Qu.:  0.0000  
+##  Max.   :4918.0   Max.   :63.000   Max.   :871.0   Max.   :275.0000  
+##    poutcome              y            
+##  Length:45211       Length:45211      
+##  Class :character   Class :character  
+##  Mode  :character   Mode  :character  
+##                                       
+##                                       
+## </code></pre>
+<p>Summary result shows that age variable is character so I convert it to numeric</p>
+<pre class="r"><code>df$age=as.numeric(df$age)</code></pre>
+<p>Average and Median of age of the Clients accounts’ balance :</p>
+<pre class="r"><code>paste(&quot;Avrage age of the clients is: &quot;,round(mean(df$age),1), &quot; years&quot;)</code></pre>
+<pre><code>## [1] &quot;Avrage age of the clients is:  40.9  years&quot;</code></pre>
+<pre class="r"><code>paste(&quot;Median of age of clients is: &quot;,median(df$age))</code></pre>
+<pre><code>## [1] &quot;Median of age of clients is:  39&quot;</code></pre>
 </div>
 </div>
 

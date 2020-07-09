@@ -47,3 +47,23 @@ Duplicate verification
 ```{r}
 ifelse(nrow(df[(duplicated(df)) , ])==0,"No duplicate", "There are duplicated in the table")
 ```
+
+Average and Median of age of the Clients accounts' balance :
+```{r}
+summary(df)
+```
+Summary result shows that age variable is character so I convert it to numeric
+```{r}
+df$age=as.numeric(df$age)
+```
+
+Average and Median of age of the Clients accounts' balance :
+```{r}
+paste("Avrage age of the clients is: ",round(mean(df$age),1), " years")
+paste("Median of age of clients is: ",median(df$age), "years")
+```
+
+Changing the name of the variable representing if the client has subscribed to direct deposit or no to ‘deposit’
+```{r}
+names(df)[grep("^y", colnames(df))]="deposit"
+```

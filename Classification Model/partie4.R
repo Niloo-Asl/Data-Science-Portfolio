@@ -33,8 +33,7 @@ age_madian=median(df$age)
 
 # 2)	Dans la base de données se trouve la variable y représentant si la personne à souscrit au dépôt direct.
 # Pouvez-vous changer le nom de cette variable en ‘deposit’ ? 
-a=grep("^y", colnames(df))
-names(df)[a]="deposit"
+names(df)[grep("^y", colnames(df))]="deposit"
 
 # 3) Veuillez créer la table de données data_bank_deposit qui ne possèdera que les clients qui ont une balance strictement supérieure à 0.
 data_bank_deposit=subset(df, balance > 0)
