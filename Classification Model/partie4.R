@@ -1,12 +1,12 @@
 ############################################### Importer le fichier de data ############################################
 library(readr)
-df <- read_delim(" data_examen_final.csv", ";", escape_double = FALSE, trim_ws = TRUE)
+df <- read_delim("data.csv", ";", escape_double = FALSE, trim_ws = TRUE)
 
 ############################################### Nettoyage de donnees ############################################
 #remove the extra characters in column name by changing the column names
 colnames(df)= gsub('"','',colnames(df))
 
-#remove extra characters in age column
+#remove extra characters in each column values
 df$age=gsub('"','',df$age)
 df$job=gsub('"','',df$job)
 df$marital=gsub('"','', df$marital)
@@ -19,10 +19,8 @@ df$month=gsub('"','', df$month)
 df$poutcome=gsub('"','', df$poutcome)
 df$y=gsub('"','', df$y)
 
-# est-ce que chaque client est repete une seule fois ou plus ?
-A=df[(duplicated(df)) , ]
-# la reponse est non 
-rm(A)
+# Duplicate verification
+ifelse(nrow(df[(duplicated(df)) , ])==0,"No duplicate", "There are duplicated in the table")
 
 ############################################### Repondre aux questions ############################################
 # 1)	Pouvez-vous déterminer l’âge moyen ainsi que la médiane concernant la balance du compte de notre clientèle ? 
