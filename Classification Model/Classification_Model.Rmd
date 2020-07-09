@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 library(readr)
+library(rpart)
+library(rattle)
 ```
 
 #### Importing Data
@@ -66,4 +68,22 @@ paste("Median of age of clients is: ",median(df$age), "years")
 Changing the name of the variable representing if the client has subscribed to direct deposit or no to ‘deposit’
 ```{r}
 names(df)[grep("^y", colnames(df))]="deposit"
+```
+
+Creating the data_deposit data table which only include customers with a balance higher than 0.
+```{r}
+data_deposit=subset(df, balance > 0)
+```
+
+### Designing a classification tree on the data_deposit data using all the explanatory variables:
+**Note** This classification tree is a Gini-based tree, with a maximum depth of 5 and a minimum number of 50 observations in the terminal leaves.
+```{r}
+rpart_deposit=rpart(deposit~., data_deposit, parms = list(split='gini'), control=list(maxdepth=5, minsplit=50) , method ='class')
+```
+
+### The classification tree graph
+```{r}
+par(mar=c(0,2,2,0))
+plot(rpart_deposit)
+text(rpart_deposit)
 ```

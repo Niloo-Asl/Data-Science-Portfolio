@@ -42,14 +42,13 @@ data_bank_deposit=subset(df, balance > 0)
 # Cet arbre de classification sera un arbre à base de la mesure de Gini, possédant une profondeur maximale de 5 ainsi qu’un
 # nombre minimal de 50 observations dans les feuilles terminales. 
 # Veuillez effecteur un tel arbre de classification et afficher le graphique de l’arbre en question. 
-library(rpart)
 rpart_bank_deposit=rpart(deposit~., data_bank_deposit, parms = list(split='gini'), control=list(maxdepth=5, minsplit=50) , method ='class')
 # affichier en graphique la presentation de modele
 par(mar=c(0,2,2,0))
 plot(rpart_bank_deposit)
 text(rpart_bank_deposit)
 
-library(rattle)
+
 fancyRpartPlot(rpart_bank_deposit, caption = NULL)
 
 # 5)	Pouvez interpréter la règle menant à la première feuille terminale 
